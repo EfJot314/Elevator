@@ -1,5 +1,7 @@
 package com.com.org.system;
 
+import com.com.org.datastructures.Direction;
+import com.com.org.datastructures.ElevatorState;
 import com.com.org.interfaces.IElevatorSystem;
 
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 public class ElevatorSystem implements IElevatorSystem {
 
     @Override
-    public void pickup(int elevatorFloor, int direction) {
+    public void pickup(int elevatorFloor, Direction direction) {
 
     }
 
@@ -22,7 +24,7 @@ public class ElevatorSystem implements IElevatorSystem {
     }
 
     @Override
-    public List<Integer> status() {
+    public List<ElevatorState> status() {
         return List.of();
     }
 }

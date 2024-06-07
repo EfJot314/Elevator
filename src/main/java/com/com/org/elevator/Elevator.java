@@ -1,24 +1,27 @@
 package com.com.org.elevator;
 
+import com.com.org.datastructures.Direction;
+import com.com.org.datastructures.ElevatorState;
+
 public class Elevator {
 
     public final int id;
     private int currentFloor;
     private int targetFloor;
-    private int direction;
+    private Direction direction;
     private boolean doorOpen;
 
     public Elevator(int id) {
         this.id = id;
         currentFloor = 0;
         targetFloor = 0;
-        direction = 0;
+        direction = Direction.IDLE;
         doorOpen = false;
     }
 
     public void update(){
         doorOpen = false;
-        currentFloor += direction;
+        currentFloor += direction.value;
         if(currentFloor == targetFloor){
             doorOpen = true;
         }
@@ -32,7 +35,7 @@ public class Elevator {
         this.targetFloor = targetFloor;
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
@@ -44,7 +47,11 @@ public class Elevator {
         return targetFloor;
     }
 
-    public int getDirection() {
+    public Direction getDirection() {
         return direction;
+    }
+
+    public ElevatorState getElevatorState() {
+        return new ElevatorState(id, currentFloor, targetFloor, direction);
     }
 }
