@@ -6,33 +6,37 @@ import com.com.org.datastructures.ElevatorState;
 public class Elevator {
 
     public final int id;
+    private boolean enabled;
     private int currentFloor;
-    private int targetFloor;
+    private int destinationFloor;
     private Direction direction;
     private boolean doorOpen;
 
     public Elevator(int id) {
         this.id = id;
         currentFloor = 0;
-        targetFloor = 0;
+        destinationFloor = 0;
         direction = Direction.IDLE;
         doorOpen = false;
     }
 
     public void update(){
-        doorOpen = false;
-        currentFloor += direction.value;
-        if(currentFloor == targetFloor){
-            doorOpen = true;
+        if(enabled){
+            doorOpen = false;
+            currentFloor += direction.value;
+            if(currentFloor == destinationFloor){
+                doorOpen = true;
+            }
         }
+
     }
 
     public void setCurrentFloor(int currentFloor) {
         this.currentFloor = currentFloor;
     }
 
-    public void setTargetFloor(int targetFloor) {
-        this.targetFloor = targetFloor;
+    public void setDestinationFloor(int targetFloor) {
+        this.destinationFloor = targetFloor;
     }
 
     public void setDirection(Direction direction) {
@@ -43,15 +47,27 @@ public class Elevator {
         return currentFloor;
     }
 
-    public int getTargetFloor() {
-        return targetFloor;
+    public int getDestinationFloor() {
+        return destinationFloor;
     }
 
     public Direction getDirection() {
         return direction;
     }
 
+    public boolean isDoorOpen() {
+        return doorOpen;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnability(boolean enability) {
+        this.enabled = enability;
+    }
+
     public ElevatorState getElevatorState() {
-        return new ElevatorState(id, currentFloor, targetFloor, direction);
+        return new ElevatorState(id, currentFloor, destinationFloor, direction);
     }
 }

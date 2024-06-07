@@ -13,5 +13,9 @@ public class ElevatorState {
         this.direction = direction;
     }
 
+    @Override
+    public String toString() {
+        return "{id=" + id + ", currentFloor=" + currentFloor + ", destinationFloor=" + destinationFloor + ", direction=" + direction + "}";
+    }
 
 }
