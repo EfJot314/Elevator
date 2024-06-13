@@ -139,7 +139,6 @@ public class ElevatorSystem implements IElevatorSystem {
         for(Elevator elevator : elevators) {
             elevator.update();
         }
-
     }
 
     @Override

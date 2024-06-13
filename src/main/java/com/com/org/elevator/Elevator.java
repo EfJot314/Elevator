@@ -114,14 +114,35 @@ public class Elevator {
 
     public void update(){
         if(enabled && nextRequest != null){
-            doorOpen = false;
-            if(nextRequest.floor == currentFloor){
-                doorOpen = true;
-                removeRequest(nextRequest);
-                elevatorSystem.completeRequest(nextRequest);
-                elevatorLogic();
+            //if door open -> wait one step
+            if(doorOpen){
+                doorOpen = false;
             }
-            currentFloor += direction.value;
+            //otherwise -> move
+            else{
+                //if there is still a request
+                if(requests.contains(nextRequest)){
+                    //if cabin is on destination floor -> open door and complete request
+                    if( nextRequest.floor == currentFloor){
+                        doorOpen = true;
+                        elevatorSystem.completeRequest(nextRequest);
+                        elevatorLogic();
+                    }
+                    // if request is not completed yet, then move
+                    else{
+                        currentFloor += direction.value;
+                    }
+                }
+                //if there is no selected request, then find new
+                else{
+                    elevatorLogic();
+                    if(nextRequest != null){
+                        currentFloor += direction.value;
+                    }
+                }
+
+
+            }
         }
     }
 
