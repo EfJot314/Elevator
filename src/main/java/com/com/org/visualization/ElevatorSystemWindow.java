@@ -41,7 +41,11 @@ public class ElevatorSystemWindow extends JFrame {
         startSimulationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         startSimulationButton.addActionListener(e -> {
-            SimulationWindow sw = new SimulationWindow(nOfElevators);
+            Thread thread = new Thread(() -> {
+                SimulationWindow sw = new SimulationWindow(nOfElevators);
+                sw.setVisible(true);
+            });
+            thread.start();
         });
 
         panel.add(Box.createVerticalGlue());
