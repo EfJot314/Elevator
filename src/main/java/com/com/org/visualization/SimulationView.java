@@ -6,14 +6,13 @@ import com.com.org.system.ElevatorSystem;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
-public class SimulationWindow extends JFrame {
+public class SimulationView extends JFrame {
 
     private final ElevatorSystem elevatorSystem;
     private final java.util.List<ElevatorPanel> elevatorPanels = new java.util.ArrayList<>();
 
-    public SimulationWindow(ElevatorSystem elevatorSystem, int nOfFloors){
+    public SimulationView(ElevatorSystem elevatorSystem, int nOfFloors){
         this.elevatorSystem = elevatorSystem;
 
         setTitle("Elevators Simulation");

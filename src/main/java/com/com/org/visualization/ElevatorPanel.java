@@ -37,7 +37,7 @@ public class ElevatorPanel extends Panel {
         panelButton.setFont(new Font("Arial", Font.PLAIN, 20));
         panelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ButtonPanelWindow bpw = new ButtonPanelWindow(elevator, nOfFloors);
+        ButtonPanelView bpw = new ButtonPanelView(elevator, nOfFloors);
 
         panelButton.addActionListener(e -> {
             bpw.setVisible(true);

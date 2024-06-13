@@ -1,11 +1,11 @@
 package com.com.org;
 
-import com.com.org.visualization.ElevatorSystemWindow;
+import com.com.org.visualization.ElevatorSystemView;
 
 
 public class Main {
     public static void main(String[] args) {
-        ElevatorSystemWindow ew = new ElevatorSystemWindow();
+        ElevatorSystemView ew = new ElevatorSystemView();
         ew.setVisible(true);
     }
 

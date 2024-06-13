@@ -1,15 +1,14 @@
 package com.com.org.visualization;
 
-import com.com.org.datastructures.Request;
 import com.com.org.elevator.Elevator;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ButtonPanelWindow extends JFrame {
+public class ButtonPanelView extends JFrame {
 
 
-    public ButtonPanelWindow(Elevator elevator, int nOfFloors){
+    public ButtonPanelView(Elevator elevator, int nOfFloors){
         setTitle("Elevator "+elevator.id+" Button Panel");
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(500, 700);

@@ -5,13 +5,12 @@ import com.com.org.system.ElevatorSystem;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
-public class ElevatorSystemWindow extends JFrame {
+public class ElevatorSystemView extends JFrame {
 
     private int nOfElevators = 1;
 
-    public ElevatorSystemWindow(){
+    public ElevatorSystemView(){
         setTitle("Elevator Controller Panel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 700);
@@ -47,7 +46,7 @@ public class ElevatorSystemWindow extends JFrame {
             }
 
             Thread thread = new Thread(() -> {
-                SimulationWindow sw = new SimulationWindow(elevatorSystem, 11);
+                SimulationView sw = new SimulationView(elevatorSystem, 11);
                 sw.setVisible(true);
             });
             thread.start();
