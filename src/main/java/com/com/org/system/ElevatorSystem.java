@@ -9,6 +9,8 @@ import com.com.org.interfaces.IElevatorSystem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class ElevatorSystem implements IElevatorSystem {
 
     private final List<Elevator> elevators;
@@ -82,18 +84,51 @@ public class ElevatorSystem implements IElevatorSystem {
     }
 
     private void addRequestToElevators(Request request) {
+        //first iteration
+        boolean foundElevator = false;
         for(Elevator elevator : elevators) {
             //if elevator is IDLE
             if(elevator.getDirection() == Direction.IDLE){
                 elevator.addRequest(request);
+                foundElevator = true;
             }
             //if elevator has same direction as request and has appropriate current floor
             if(request.direction == elevator.getDirection()){
                 if(request.direction == Direction.DOWN && elevator.getCurrentFloor() >= elevator.getDestinationFloor()){
                     elevator.addRequest(request);
+                    foundElevator = true;
                 } else if(request.direction == Direction.UP && elevator.getCurrentFloor() <= elevator.getDestinationFloor()){
                     elevator.addRequest(request);
+                    foundElevator = true;
                 }
+            }
+        }
+        //second iteration
+        if(!foundElevator) {
+            for(Elevator elevator : elevators) {
+                //if elevator has same direction as request
+                if(request.direction == elevator.getDirection()){
+                    if(request.direction == Direction.DOWN){
+                        elevator.addRequest(request);
+                        foundElevator = true;
+                    } else if(request.direction == Direction.UP){
+                        elevator.addRequest(request);
+                        foundElevator = true;
+                    }
+                }
+            }
+            //third iteration
+            if(!foundElevator) {
+                //find elevator with the closest destination floor
+                int distance = 1000;
+                Elevator chosenElevator = elevators.get(0);
+                for(Elevator elevator : elevators) {
+                    int d = abs(elevator.getDestinationFloor() - request.floor);
+                    if(d < distance){
+                        chosenElevator = elevator;
+                    }
+                }
+                chosenElevator.addRequest(request);
             }
         }
     }
