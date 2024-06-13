@@ -21,17 +21,19 @@ Zasada działania opiera się na algorytmie, który można podzielić na dwa poz
 
 System wind ma za zadanie odbierać żądania z przycisków na poszczególnych piętrach i rozdzielać je pomiędzy dostępne windy. Przydział żądań składa się z trzech iteracji. Pierwsza z nich opiera się na następujących zasadach:
 1. Jeżeli winda jest w stanie ```IDLE```, czyli stoi bezczynnie, to zostaje jej przydzielone dane żądanie
-2. Jeżeli winda porusza się zgodnie z kierunkiem żądania (na przykład, gdy kierunek windy to ```UP``` oraz kierunek podany w żądaniu to ```UP```) oraz piętro żądania znajduje się "po drodze" windy (czyli w tym przykładzie jeżeli piętro windy jest mniejsze od piętra żądania), to zostaje jej przydzielone żądanie 
+2. Jeżeli winda porusza się zgodnie z kierunkiem żądania (na przykład, gdy kierunek windy to ```UP``` oraz kierunek podany w żądaniu to ```UP```) oraz piętro żądania znajduje się "po drodze" windy (czyli w tym przykładzie jeżeli piętro windy jest mniejsze od piętra żądania), to zostaje jej przydzielone to żądanie 
 
-Jeżeli po pierwszej iteracji żądanie nie zostanie przydzielone do żadnej z wind, to przechodzi ono do drugiej iteracji, w której każdej windzie poruszającej się w kierunku zgodnym z żądaniem, jest ono przydzielane. Jeżeli równeż po drugiej iteracji żądanie nie zostało wysłane do żadnej windy, to w trzeciej iteracji znajdywana jest winda, której piętro docelowe znajduje się najbliżej piętra żądania, a następnie jest jej ono przypisywane.
+Jeżeli po pierwszej iteracji żądanie nie zostanie przydzielone do żadnej z wind, to przechodzi ono do drugiej iteracji, w której każdej windzie poruszającej się w kierunku zgodnym z żądaniem, jest ono przydzielane. Jeżeli również po drugiej iteracji żądanie nie zostało wysłane do żadnej windy, to w trzeciej iteracji jest ono przypisywane do windy, której piętro docelowe znajduje się najbliżej piętra żądanego.
 
 ### Poziom drugi - interfejs pojedynczej windy
 
 Pojedyncza winda ma dwa zadania:
 1. Wykonywać żądania systemu
-2. Przyjmować i wykonywać żądania wewnętrzne (podane przez panel przycisków wewnątrz kabiny)
+2. Przyjmować i wykonywać żądania wewnętrzne (podawane przez panel przycisków wewnątrz kabiny)
 
-Oba typy żądań są dodawane do listy, z której wybierany jest element minimalny za pomocą zaimplementowanego komparatora. Ten element minimalny jest ustawiany jako pierwsze żądanie do wykonania. Winda jedzie na wskazane piętro, otwiera drzwi i jeżeli lista żądań jest pusta oraz nie otrzyma kolejnego żądania, to przechodzi w tryb ```IDLE```. Informacja o spełnieniu żądania jest wysyłana do systemu, który wysyła wszystkim windom informacje, żeby usunęły je ze swoich list, dzięki czemu inne windy będą mogły wykonywać inne zadania. 
+Oba typy żądań są dodawane do wspólnej listy, z której wybierany jest element minimalny za pomocą stworzonego w tym celu komparatora. Ustalony element minimalny jest przypisywany jako pierwsze żądanie do wykonania. 
+
+Winda jedzie na wskazane piętro, otwiera drzwi i jeżeli lista żądań jest pusta oraz nie otrzyma kolejnego żądania, to przechodzi w tryb ```IDLE```. Informacja o spełnieniu żądania jest wysyłana do systemu, który przesyła dalej wszystkim windom informacje, żeby usunęły je ze swoich list, dzięki czemu będą one mogły wykonywać inne zadania. 
 
 Wspomniany komparator (```RequestComparator```) jest klasą prywatną, która porównuje dwa żądania na podstawie wartości ich parametrów oraz aktualnego stanu windy. Porównanie opiera się na następujących zasadach:
 1. Jeżeli winda jest w stanie ```IDLE```, wtedy lepszym żądaniem jest to, którego piętro znajduje się bliżej
@@ -46,11 +48,11 @@ Wspomniany komparator (```RequestComparator```) jest klasą prywatną, która po
 
 Projekt składa się z dwóch części:
 1. Implementacji systemu wind (framework)
-2. Aplikacji graficznej pozwalającej na prostą interakcję ze stworzonym systemem (wizualizacja)
+2. Prostej aplikacji graficznej pozwalającej na podstawową interakcję ze stworzonym systemem (wizualizacja)
 
 ### Framework
 
-Pierwszą, a zarazem główną częścią projektu jest framework będący implementacją systemu umożliwiającego zarządzanie i obsługę windą.
+Pierwszą, a zarazem główną częścią projektu jest framework będący implementacją systemu umożliwiającego zarządzanie i obsługę wind.
 
 #### Struktury danych
 
@@ -60,7 +62,7 @@ Stworzone rozwiązanie wykorzystuje następujące klasy będące strukturami dan
 Klasa ta jest enumeratorem, który może przyjmować trzy wartości:
 1. ```UP``` - opisuje ruch windy w górę
 2. ```DOWN``` - opisuje ruch windy w dół
-3. ```IDLE``` - opisuje stan windy, w którym się nie porusza
+3. ```IDLE``` - opisuje stan windy, w którym się nie porusza (nie wykonuje żadnego żądania lub ma otwarte drzwi)
    
 ##### Elevator State
 Klasa stanu windy. Posiada ona cztery pola:
@@ -70,16 +72,16 @@ Klasa stanu windy. Posiada ona cztery pola:
 4. ```direction``` - kierunek, w którym porusza się kabina windy (```Direction```)
 
 ##### Request
-Klasa przedstawiająca rządanie do windy, składa się z następujących pól:
+Klasa przedstawiająca żądanie do windy. Składa się z następujących pól:
 1. ```floor``` - piętro, na które winda ma się udać (```int```)
 2. ```direction``` - wstępnie zadeklarowany kierunek, w którym winda ma się udać z żądanego piętra (```Direction```)
 
 #### Komparatory
 
-Ze względu na potrzebę porównywania żądań, stworzono klasę, która to robi.
+Ze względu na potrzebę priorytetyzacji żądań, stworzono klasę, która je porównuje.
 
 ##### RequestComparator
-Klasa jest prywatna i znajduje się w pliku ```Elevator.java```. Ma ona na celu porównywanie dwóch różnych żądań typu ```Request``` na podstawie stanu windy oraz pięter i kierunków żądań.
+Klasa komparatora jest prywatna i znajduje się w pliku ```Elevator.java```. Ma ona na celu porównywanie dwóch różnych żądań typu ```Request``` na podstawie stanu windy oraz pięter i kierunków żądań.
 
 #### Interfejsy
 W celu umożliwienia ewentualnego dalszego rozwoju stworzonego rozwiązania, część komponentów została opisana interfejsami, w celu łatwiejszej integracji.
@@ -107,18 +109,18 @@ public interface IElevator {
 }
 ```
 Opis metod:
-1. ```getId()``` - zwraca liczbę naturalną będącą indentyfikatorem danej windy
+1. ```getId()``` - zwraca liczbę naturalną będącą identyfikatorem danej windy
 2. ```update()``` - odpowiada za uaktualnianie stanu windy (otwieranie i zamykanie drzwi, poruszanie kabiną windy, sprawdzanie czy winda spełniła żądanie)
 3. ```addRequest()``` - dodaje podane żądanie do listy żądań do wykonania
-4. ```goTo()``` - podobnie do poprzedniego dodaje żądanie do listy (różni się argumentami oraz tym, że ta metoda obsługuje żądania wewnętrzne, a poprzednia zewnętrzne)
+4. ```goTo()``` - podobnie jak poprzednia metoda, dodaje żądanie do listy (różni się argumentami oraz tym, że ta metoda obsługuje żądania wewnętrzne, a poprzednia zewnętrzne)
 5. ```removeRequest()``` - usuwa podane żądanie z listy
 6. ```getRequests()``` - zwraca kopię listy żądań
 7. ```setCurrentFloor()```, ```setDestinationFloor()```, ```setDirection()``` - metody ustawiające wprost wartości parametrów windy
 8. ```getCurrentFloor()```, ```getDestinationFloor()```, ```getDirection()``` - metody zwracające wartości parametrów windy
-9. ```isDoorOpen()``` - metoda zwracająca ```true``` w przypadku, gdy drzwi windy są otwarte oraz ```false``` w przeciwnym przypadku
+9. ```isDoorOpen()``` - metoda zwracająca ```true``` w sytuacji, gdy drzwi windy są otwarte oraz ```false``` w przeciwnym przypadku
 10. ```isEnabled()``` - metoda zwracająca stan działania (włączenia) windy. ```true``` gdy winda działa, ```false``` gdy winda nie działa
 11. ```setEnability()``` - metoda pozwala na wyłączenie lub włączenie windy
-12. ```getElevatorState()``` - metoda zwraca stan windy
+12. ```getElevatorState()``` - metoda zwraca stan windy (```ElevatorState```)
 
 ##### IElevatorSystem
 Interfejs opisujący system zarządzający wieloma pracującymi równocześnie windami.
@@ -141,7 +143,7 @@ Opis metod:
 2. ```getNumberOfElevators()``` - metoda zwraca liczbę wszystkich wind w systemie
 3. ```getElevator()``` - metoda zwraca obiekt typu ```IElevator```, który posiada podany identyfikator lub ```null``` w przeciwnym przypadku
 4. ```removeElevator()``` - metoda usuwa obiekt windy o podanym identyfikatorze z systemu
-5. ```disableElevator()```, ```enableElevator()``` - metody pozwalające na wyłączanie i włączanie wind (na przykład w razie awarii)
+5. ```disableElevator()```, ```enableElevator()``` - metody pozwalające na wyłączanie i włączanie windy o podanym identyfikatorze (na przykład w razie awarii)
 6. ```pickup()``` - metoda przyjmuje żądanie i rozpoczyna jego obsługę
 7. ```update()``` - metoda ustawia wprost podane parametry windy
 8. ```step()``` - metoda wykonuje krok symulacji systemu wind
@@ -165,7 +167,7 @@ Drugą częścią projektu jest jego wizualizacja w postaci aplikacji graficznej
 
 !["Start View"](images/startView.png)
 
-Na pierwszym widoku (```ElevatorSystemView```) znajduje się suwak do określania liczby wind w systemie oraz przycisk umożliwiający start symulacji, po którego naciśnięciu uruchamia się nowe okno ```SimulationView``` (ekran początkowy nie znika - można uruchomić wiele symulacji jednocześnie).
+Na pierwszym widoku (```ElevatorSystemView```) znajduje się suwak do określania liczby wind w systemie (z przedziału [1 ; 16] ) oraz przycisk umożliwiający start symulacji, po którego naciśnięciu uruchamia się nowe okno ```SimulationView```, który uruchamia i symuluje ```ElevatorSystem``` (ekran początkowy nie znika - można uruchomić wiele symulacji jednocześnie).
 
 #### Widok symulacji
 
@@ -182,14 +184,14 @@ Widok symulacji jest podzielony na dwie kolumny:
    
 Poniżej kolumn znajduje się przycisk ```Next Step```, który wysyła do systemu prośbę o wykonanie kolejnego kroku symulacji.
 
-Należy podkreślić, że w każdej symulacji występuje jedenaście poziomów (10 pięter + parter). Jest to spowodowane łatwością wyświetlenia tego w graficznym interfejsie użytkownika. Framework nie ma podanych wprost żadnych ograniczeń związanych z liczbą poziomów obsługiwanych przez windy.
-
 W przypadku, gdy drzwi którejś z wind są otwarte, jej tło zmienia kolor na zielony.
 
 
 !["Open door"](images/openDoor.png)
 
 Można zauważyć, że gdy winda ma otwarte drzwi, jest w tymczasowym stanie ```IDLE``` na jeden krok symulacji, ponieważ winda nie może się poruszać z otwartymi drzwiami do kabiny.
+
+W każdej zwizualizowanej symulacji występuje zawsze dokładnie jedenaście poziomów (10 pięter + parter). Jest to spowodowane łatwością wyświetlenia tej liczby rekordów w graficznym interfejsie użytkownika tej aplikacji. Należy podkreślić jednak, że framework nie ma podanych wprost żadnych ograniczeń związanych z liczbą poziomów obsługiwanych przez windy.
 
 #### Widok panelu przycisków w kabinie
 
