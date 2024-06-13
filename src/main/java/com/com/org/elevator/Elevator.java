@@ -180,7 +180,15 @@ public class Elevator {
     }
 
     private void findDirection(){
-        direction = nextRequest.direction;
+        if(nextRequest.floor > currentFloor){
+            direction = Direction.UP;
+        }
+        else if(nextRequest.floor < currentFloor){
+            direction = Direction.DOWN;
+        }
+        else{
+            direction = nextRequest.direction;
+        }
     }
 
     private void elevatorLogic(){

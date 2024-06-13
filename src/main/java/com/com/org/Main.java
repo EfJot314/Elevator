@@ -1,8 +1,10 @@
 package com.com.org;
 
+import com.com.org.datastructures.Direction;
 import com.com.org.datastructures.ElevatorState;
 import com.com.org.interfaces.IElevatorSystem;
 import com.com.org.system.ElevatorSystem;
+import com.com.org.visualization.ElevatorWindow;
 
 import java.util.List;
 
@@ -16,11 +18,19 @@ public class Main {
         elevatorSystem.addElevator(3);
         elevatorSystem.addElevator(4);
         elevatorSystem.addElevator(5);
-        elevatorSystem.addElevator(6);
+
+        List<ElevatorState> systemState1 = elevatorSystem.status();
+        System.out.println(systemState1);
+
+        elevatorSystem.pickup(3, Direction.DOWN);
 
 
-        List<ElevatorState> systemState = elevatorSystem.status();
-        System.out.println(systemState);
+        List<ElevatorState> systemState2 = elevatorSystem.status();
+        System.out.println(systemState2);
+
+
+        ElevatorWindow ew = new ElevatorWindow();
 
     }
+
 }
