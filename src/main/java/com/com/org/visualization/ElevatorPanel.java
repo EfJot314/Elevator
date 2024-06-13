@@ -40,10 +40,6 @@ public class ElevatorPanel extends Panel {
         ButtonPanelWindow bpw = new ButtonPanelWindow(elevator, nOfFloors);
 
         panelButton.addActionListener(e -> {
-//            Thread thread = new Thread(() -> {
-//                bpw.setVisible(true);
-//            });
-//            thread.start();
             bpw.setVisible(true);
         });
 
@@ -64,6 +60,14 @@ public class ElevatorPanel extends Panel {
         floorLabel.setText("Floor: " + elevator.getCurrentFloor());
         directionLabel.setText("Direction: " + elevator.getDirection());
         destinationLabel.setText("Destination: " + elevator.getDestinationFloor());
+
+        //green background if open door
+        if(elevator.isDoorOpen()){
+            setBackground(Color.GREEN);
+        }
+        else{
+            setBackground(null);
+        }
     }
 
 

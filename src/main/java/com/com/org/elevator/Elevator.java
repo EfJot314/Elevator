@@ -20,8 +20,6 @@ class RequestComparator implements Comparator<Request> {
         this.floor = floor;
     }
 
-
-
     //return "+" if r2 > r1, "-" if r1 > r2, "0" if r1 == r2
     @Override
     public int compare(Request r1, Request r2) {
@@ -156,6 +154,7 @@ public class Elevator {
     }
 
     public void goTo(int floor){
+        //create request to desitnation floor
         Request request;
         if(floor > currentFloor){
             request = new Request(floor, Direction.UP);
@@ -164,6 +163,8 @@ public class Elevator {
             request = new Request(floor, Direction.DOWN);
         }
         requests.add(request);
+
+        //find new request
         elevatorLogic();
     }
 
@@ -222,6 +223,7 @@ public class Elevator {
             nextRequest = null;
         }
         else{
+            //get best request
             nextRequest = Collections.min(requests, comparator);
         }
     }
@@ -249,6 +251,5 @@ public class Elevator {
             destinationFloor = nextRequest.floor;
         }
     }
-
 
 }
