@@ -1,7 +1,7 @@
-package com.com.org.visualization;
+package system.elevator.org.visualization;
 
 
-import com.com.org.framework.system.ElevatorSystem;
+import system.elevator.org.framework.system.ElevatorSystem;
 
 import javax.swing.*;
 import java.awt.*;

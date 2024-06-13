@@ -2,6 +2,12 @@
 
 Program do obsługi systemu wielu działających równolegle wind.
 
+## Informacje ogólne
+Aplikacja została napisana w języku ```Java 19``` z wykorzystaniem narzedzia do budowania projektów ```Maven```. 
+
+## Uruchamianie aplikacji
+W celu uruchomienia aplikacji należy 
+
 ## Opis działania
 
 Zasada działania opiera się na algorytmie, który można podzielić na dwa poziomy.

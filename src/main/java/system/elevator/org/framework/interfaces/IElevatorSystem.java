@@ -1,7 +1,7 @@
-package com.com.org.framework.interfaces;
+package system.elevator.org.framework.interfaces;
 
-import com.com.org.framework.datastructures.Direction;
-import com.com.org.framework.datastructures.ElevatorState;
+import system.elevator.org.framework.datastructures.Direction;
+import system.elevator.org.framework.datastructures.ElevatorState;
 
 import java.util.List;
 

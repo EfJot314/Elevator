@@ -1,6 +1,6 @@
-package com.com.org;
+package system.elevator.org;
 
-import com.com.org.visualization.ElevatorSystemView;
+import system.elevator.org.visualization.ElevatorSystemView;
 
 
 public class Main {

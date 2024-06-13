@@ -1,6 +1,6 @@
-package com.com.org.visualization;
+package system.elevator.org.visualization;
 
-import com.com.org.framework.interfaces.IElevator;
+import system.elevator.org.framework.interfaces.IElevator;
 
 import javax.swing.*;
 import java.awt.*;

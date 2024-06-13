@@ -1,11 +1,11 @@
-package com.com.org.framework.system;
+package system.elevator.org.framework.system;
 
-import com.com.org.framework.datastructures.Direction;
-import com.com.org.framework.datastructures.ElevatorState;
-import com.com.org.framework.datastructures.Request;
-import com.com.org.framework.elevator.Elevator;
-import com.com.org.framework.interfaces.IElevator;
-import com.com.org.framework.interfaces.IElevatorSystem;
+import system.elevator.org.framework.datastructures.Direction;
+import system.elevator.org.framework.datastructures.ElevatorState;
+import system.elevator.org.framework.datastructures.Request;
+import system.elevator.org.framework.elevator.Elevator;
+import system.elevator.org.framework.interfaces.IElevator;
+import system.elevator.org.framework.interfaces.IElevatorSystem;
 
 import java.util.ArrayList;
 import java.util.List;
