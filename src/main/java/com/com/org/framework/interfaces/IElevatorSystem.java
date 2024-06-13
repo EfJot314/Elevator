@@ -16,5 +16,4 @@ public interface IElevatorSystem {
     void update(int id, int currentFloor, int destinationFloor);
     void step();
     List<ElevatorState> status();
-
 }

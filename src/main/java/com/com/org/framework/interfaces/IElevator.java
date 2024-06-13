@@ -7,7 +7,6 @@ import com.com.org.framework.datastructures.Request;
 import java.util.List;
 
 public interface IElevator {
-
     int getId();
     void update();
     void addRequest(Request request);
@@ -24,6 +23,4 @@ public interface IElevator {
     boolean isEnabled();
     void setEnability(boolean enability);
     ElevatorState getElevatorState();
-
-
 }
