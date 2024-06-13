@@ -117,6 +117,7 @@ public class Elevator {
             //if door open -> wait one step
             if(doorOpen){
                 doorOpen = false;
+                elevatorLogic();
             }
             //otherwise -> move
             else{
@@ -125,8 +126,9 @@ public class Elevator {
                     //if cabin is on destination floor -> open door and complete request
                     if( nextRequest.floor == currentFloor){
                         doorOpen = true;
+                        direction = Direction.IDLE;
+                        destinationFloor = currentFloor;
                         elevatorSystem.completeRequest(nextRequest);
-                        elevatorLogic();
                     }
                     // if request is not completed yet, then move
                     else{
@@ -220,7 +222,7 @@ public class Elevator {
             nextRequest = null;
         }
         else{
-            nextRequest = Collections.max(requests, comparator);
+            nextRequest = Collections.min(requests, comparator);
         }
     }
 
