@@ -4,7 +4,7 @@ import com.com.org.datastructures.Direction;
 import com.com.org.datastructures.ElevatorState;
 import com.com.org.interfaces.IElevatorSystem;
 import com.com.org.system.ElevatorSystem;
-import com.com.org.visualization.ElevatorWindow;
+import com.com.org.visualization.ElevatorSystemWindow;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class Main {
         System.out.println(systemState2);
 
 
-        ElevatorWindow ew = new ElevatorWindow();
+        ElevatorSystemWindow ew = new ElevatorSystemWindow();
 
     }
 
