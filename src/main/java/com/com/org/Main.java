@@ -16,6 +16,8 @@ public class Main {
         elevatorSystem.addElevator(3);
         elevatorSystem.addElevator(4);
         elevatorSystem.addElevator(5);
+        elevatorSystem.addElevator(6);
+
 
         List<ElevatorState> systemState = elevatorSystem.status();
         System.out.println(systemState);
