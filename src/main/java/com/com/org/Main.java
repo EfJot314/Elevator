@@ -1,6 +1,7 @@
 package com.com.org;
 
 import com.com.org.datastructures.ElevatorState;
+import com.com.org.elevator.Elevator;
 import com.com.org.interfaces.IElevatorSystem;
 import com.com.org.system.ElevatorSystem;
 
