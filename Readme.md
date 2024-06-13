@@ -95,6 +95,19 @@ public interface IElevator {
     ElevatorState getElevatorState();
 }
 ```
+Opis metod:
+1. ```getId()``` - zwraca liczbę naturalną będącą indentyfikatorem danej windy
+2. ```update()``` - odpowiada za uaktualnianie stanu windy (otwieranie i zamykanie drzwi, poruszanie kabiną windy, sprawdzanie czy winda spełniła żądanie)
+3. ```addRequest()``` - dodaje podane żądanie do listy żądań do wykonania
+4. ```goTo()``` - podobnie do poprzedniego dodaje żądanie do listy (różni się argumentami oraz tym, że ta metoda obsługuje żądania wewnętrzne, a poprzednia zewnętrzne)
+5. ```removeRequest()``` - usuwa podane żądanie z listy
+6. ```getRequests()``` - zwraca kopię listy żądań
+7. ```setCurrentFloor()```, ```setDestinationFloor()```, ```setDirection()``` - metody ustawiające wprost wartości parametrów windy
+8. ```getCurrentFloor()```, ```getDestinationFloor()```, ```getDirection()``` - metody zwracające wartości parametrów windy
+9. ```isDoorOpen()``` - metoda zwracająca ```true``` w przypadku, gdy drzwi windy są otwarte oraz ```false``` w przeciwnym przypadku
+10. ```isEnabled()``` - metoda zwracająca stan działania (włączenia) windy. ```true``` gdy winda działa, ```false``` gdy winda nie działa
+11. ```setEnability()``` - metoda pozwala na wyłączenie lub włączenie windy
+12. ```getElevatorState()``` - metoda zwraca stan windy
 
 ##### IElevatorSystem
 Interfejs opisujący system zarządzający wieloma pracującymi równocześnie windami.
@@ -112,6 +125,17 @@ public interface IElevatorSystem {
     List<ElevatorState> status();
 }
 ```
+Opis metod:
+1. ```addElevator()``` - metoda tworzy (dodaje) nową windę o podanym identyfikatorze
+2. ```getNumberOfElevators()``` - metoda zwraca liczbę wszystkich wind w systemie
+3. ```getElevator()``` - metoda zwraca obiekt typu ```IElevator```, który posiada podany identyfikator lub ```null``` w przeciwnym przypadku
+4. ```removeElevator()``` - metoda usuwa obiekt windy o podanym identyfikatorze z systemu
+5. ```disableElevator()```, ```enableElevator()``` - metody pozwalające na wyłączanie i włączanie wind (na przykład w razie awarii)
+6. ```pickup()``` - metoda przyjmuje żądanie i rozpoczyna jego obsługę
+7. ```update()``` - metoda ustawia wprost podane parametry windy
+8. ```step()``` - metoda wykonuje krok symulacji systemu wind
+9. ```status()``` - metoda zwraca listę obiektów typu ```ElevatorState``` opisującą stany wszystkich wind w systemie
+
 
 #### Klasa windy (```Elevator```)
 
@@ -119,5 +143,29 @@ Klasa ```Elevator.java``` implementuje interfejs ```IElevator```. Klasa jest odp
 
 #### Klasa systemu wind (```ElevatorSystem```)
 Klasa ```ElevatorSystem.java``` implementuje interfejs ```IElevatorSystem```. Klasa jest odpowiedzialna głównie za przyjmowanie żądań z paneli przycisków znajdujących się na poszczególnych piętrach, a następnie za rozdysponowywanie tych żądań (```Request```) do poszczególnych wind (```Elevator```). 
+
+
+
+### Wizualizacja
+
+Drugą częścią projektu jest jego wizualizacja w postaci aplikacji graficznej napisanej na podstawie biblioteki ```swing```. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

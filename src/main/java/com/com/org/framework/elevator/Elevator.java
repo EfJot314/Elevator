@@ -146,8 +146,6 @@ public class Elevator implements IElevator {
                         currentFloor += direction.value;
                     }
                 }
-
-
             }
         }
     }
