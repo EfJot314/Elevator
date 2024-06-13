@@ -3,6 +3,7 @@ package com.com.org.elevator;
 import com.com.org.datastructures.Direction;
 import com.com.org.datastructures.ElevatorState;
 import com.com.org.datastructures.Request;
+import com.com.org.system.ElevatorSystem;
 
 import java.util.*;
 
@@ -88,6 +89,7 @@ class RequestComparator implements Comparator<Request> {
 
 public class Elevator {
 
+    private final ElevatorSystem elevatorSystem;
     public final int id;
     private boolean enabled;
     private int currentFloor;
@@ -97,7 +99,9 @@ public class Elevator {
     private final List<Request> requests;
     private Request nextRequest;
 
-    public Elevator(int id) {
+    public Elevator(int id, ElevatorSystem elevatorSystem) {
+        this.elevatorSystem = elevatorSystem;
+
         this.id = id;
         currentFloor = 0;
         destinationFloor = 0;
@@ -105,16 +109,19 @@ public class Elevator {
         doorOpen = false;
         requests = new ArrayList<>();
         nextRequest = null;
+        enabled = true;
     }
 
     public void update(){
-        if(enabled){
+        if(enabled && nextRequest != null){
             doorOpen = false;
-            currentFloor += direction.value;
             if(nextRequest.floor == currentFloor){
                 doorOpen = true;
+                removeRequest(nextRequest);
+                elevatorSystem.completeRequest(nextRequest);
                 elevatorLogic();
             }
+            currentFloor += direction.value;
         }
     }
 
@@ -122,6 +129,18 @@ public class Elevator {
         if(!requests.contains(request)){
             requests.add(request);
         }
+        elevatorLogic();
+    }
+
+    public void goTo(int floor){
+        Request request;
+        if(floor > currentFloor){
+            request = new Request(floor, Direction.UP);
+        }
+        else{
+            request = new Request(floor, Direction.DOWN);
+        }
+        requests.add(request);
         elevatorLogic();
     }
 
@@ -176,7 +195,12 @@ public class Elevator {
 
     private void findNextRequest(){
         Comparator<Request> comparator = new RequestComparator(direction, currentFloor);
-        nextRequest = Collections.max(requests, comparator);
+        if(requests.isEmpty()){
+            nextRequest = null;
+        }
+        else{
+            nextRequest = Collections.max(requests, comparator);
+        }
     }
 
     private void findDirection(){
@@ -193,7 +217,14 @@ public class Elevator {
 
     private void elevatorLogic(){
         findNextRequest();
-        findDirection();
+        if(nextRequest == null){
+            direction = Direction.IDLE;
+            destinationFloor = currentFloor;
+        }
+        else{
+            findDirection();
+            destinationFloor = nextRequest.floor;
+        }
     }
 
 

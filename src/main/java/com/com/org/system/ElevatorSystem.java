@@ -20,14 +20,19 @@ public class ElevatorSystem implements IElevatorSystem {
     }
 
     public void addElevator(int id) {
-        Elevator elevator = getElevatorById(id);
+        Elevator elevator = getElevator(id);
         if(elevator == null) {
-            this.elevators.add(new Elevator(id));
+            this.elevators.add(new Elevator(id, this));
         }
     }
 
+    @Override
+    public int getNumberOfElevators() {
+        return this.elevators.size();
+    }
+
     public void removeElevator(int id) {
-        Elevator elevator = getElevatorById(id);
+        Elevator elevator = getElevator(id);
         if(elevator != null) {
             elevators.remove(elevator);
         }
@@ -35,15 +40,17 @@ public class ElevatorSystem implements IElevatorSystem {
 
     @Override
     public void disableElevator(int id) {
-        Elevator elevator = getElevatorById(id);
+        Elevator elevator = getElevator(id);
         if(elevator != null) {
             elevator.setEnability(false);
         }
     }
 
+
+
     @Override
     public void enableElevator(int id) {
-        Elevator elevator = getElevatorById(id);
+        Elevator elevator = getElevator(id);
         if(elevator != null) {
             elevator.setEnability(true);
         }
@@ -67,7 +74,7 @@ public class ElevatorSystem implements IElevatorSystem {
 
     @Override
     public void update(int id, int currentFloor, int destinationFloor) {
-        Elevator elevator = getElevatorById(id);
+        Elevator elevator = getElevator(id);
         if(elevator != null) {
             elevator.setCurrentFloor(currentFloor);
             elevator.setDestinationFloor(destinationFloor);
@@ -109,7 +116,7 @@ public class ElevatorSystem implements IElevatorSystem {
         return elevatorStates;
     }
 
-    private Elevator getElevatorById(int id){
+    public Elevator getElevator(int id){
         for(Elevator elevator : elevators) {
             if(elevator.id == id){
                 return elevator;

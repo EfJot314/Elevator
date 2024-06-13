@@ -1,12 +1,21 @@
 package com.com.org.visualization;
 
 
+import com.com.org.datastructures.Direction;
+import com.com.org.system.ElevatorSystem;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class SimulationWindow extends JFrame {
 
-    public SimulationWindow(int nOfElevators){
+    private final ElevatorSystem elevatorSystem;
+    private final java.util.List<ElevatorPanel> elevatorPanels = new java.util.ArrayList<>();
+
+    public SimulationWindow(ElevatorSystem elevatorSystem, int nOfFloors){
+        this.elevatorSystem = elevatorSystem;
+
         setTitle("Elevators Simulation");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1400, 900);
@@ -37,10 +46,11 @@ public class SimulationWindow extends JFrame {
         leftPanel.add(floorsLabel);
         leftPanel.add(Box.createVerticalGlue());
 
-        for(int i=0;i<10;i++){
+        for(int i=nOfFloors-1;i>=0;i--){
+            int floorNum = i;
+
             Panel p = new Panel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            int floorNum = i+1;
 
             JLabel label = new JLabel("Floor "+floorNum);
             label.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -49,14 +59,14 @@ public class SimulationWindow extends JFrame {
             upButton.setFont(new Font("Arial", Font.PLAIN, 20));
             upButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             upButton.addActionListener(e -> {
-                System.out.println("Floor "+ floorNum + " up");
+                elevatorSystem.pickup(floorNum, Direction.UP);
             });
 
             JButton downButton = new JButton("\u25BC");
             downButton.setFont(new Font("Arial", Font.PLAIN, 20));
             downButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             downButton.addActionListener(e -> {
-                System.out.println("Floor "+ floorNum + " down");
+                elevatorSystem.pickup(floorNum, Direction.DOWN);
             });
 
             p.add(Box.createHorizontalGlue());
@@ -72,8 +82,6 @@ public class SimulationWindow extends JFrame {
 
         leftPanel.add(Box.createVerticalGlue());
 
-
-
         //Elevators
 
         JLabel elevatorsLabel = new JLabel("Elevators");
@@ -83,52 +91,9 @@ public class SimulationWindow extends JFrame {
         rightPanel.add(elevatorsLabel);
         rightPanel.add(Box.createVerticalGlue());
 
-        for(int i=0;i<nOfElevators;i++){
-            Panel p = new Panel();
-            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-
-            JLabel elevatorLabel = new JLabel("Elevator "+(i+1));
-            elevatorLabel.setFont(new Font("Arial", Font.BOLD, 20));
-            elevatorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            JLabel floorLabel = new JLabel("Floor "+i);
-            floorLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-            floorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            JLabel directionLabel = new JLabel("Direction: DOWN");
-            directionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-            directionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            JLabel destinationLabel = new JLabel("Destination: " + i);
-            destinationLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-            destinationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            JButton panelButton = new JButton("Button Panel");
-            panelButton.setFont(new Font("Arial", Font.PLAIN, 20));
-            panelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            int id = i+1;
-            panelButton.addActionListener(e -> {
-                Thread thread = new Thread(() -> {
-                    ButtonPanelWindow bpw = new ButtonPanelWindow(id, 10);
-                    bpw.setVisible(true);
-                });
-                thread.start();
-
-            });
-
-            p.add(Box.createHorizontalGlue());
-            p.add(elevatorLabel);
-            p.add(Box.createHorizontalGlue());
-            p.add(floorLabel);
-            p.add(Box.createHorizontalGlue());
-            p.add(directionLabel);
-            p.add(Box.createHorizontalGlue());
-            p.add(destinationLabel);
-            p.add(Box.createHorizontalGlue());
-            p.add(panelButton);
-            p.add(Box.createHorizontalGlue());
-
+        for(int i=0;i<elevatorSystem.getNumberOfElevators();i++){
+            ElevatorPanel p = new ElevatorPanel(elevatorSystem.getElevator(i+1), nOfFloors);
+            elevatorPanels.add(p);
             rightPanel.add(p);
             rightPanel.add(Box.createVerticalStrut(7));
         }
@@ -139,6 +104,10 @@ public class SimulationWindow extends JFrame {
         JButton stepButton = new JButton("Next Step");
         stepButton.setFont(new Font("Arial", Font.PLAIN, 20));
         stepButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        stepButton.addActionListener(e -> {
+            makeStepAndUpdate();
+        });
 
 
         panel.add(Box.createVerticalGlue());
@@ -153,6 +122,15 @@ public class SimulationWindow extends JFrame {
 
         add(panel);
 
+    }
+
+
+    void makeStepAndUpdate(){
+        elevatorSystem.step();
+
+        for(ElevatorPanel panel : elevatorPanels){
+            panel.update();
+        }
     }
 
 }

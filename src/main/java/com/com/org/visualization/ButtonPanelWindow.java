@@ -1,20 +1,23 @@
 package com.com.org.visualization;
 
+import com.com.org.datastructures.Request;
+import com.com.org.elevator.Elevator;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ButtonPanelWindow extends JFrame {
 
 
-    public ButtonPanelWindow(int id, int nOfFloors){
-        setTitle("Elevator "+id+" Button Panel");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    public ButtonPanelWindow(Elevator elevator, int nOfFloors){
+        setTitle("Elevator "+elevator.id+" Button Panel");
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(500, 700);
 
         Panel panel = new Panel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Elevator "+id);
+        JLabel label = new JLabel("Elevator "+elevator.id);
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -22,10 +25,16 @@ public class ButtonPanelWindow extends JFrame {
         panel.add(Box.createVerticalGlue());
         panel.add(label);
         panel.add(Box.createVerticalGlue());
-        for(int i=0;i<nOfFloors;i++){
-            JButton button = new JButton(String.valueOf((i+1)));
+        for(int i=nOfFloors-1;i>=0;i--){
+            int floor = i;
+
+            JButton button = new JButton(String.valueOf(floor));
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.setFont(new Font("Arial", Font.PLAIN, 20));
+
+            button.addActionListener(e -> {
+                elevator.goTo(floor);
+            });
 
             panel.add(button);
         }

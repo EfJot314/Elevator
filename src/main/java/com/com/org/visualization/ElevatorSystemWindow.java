@@ -1,15 +1,14 @@
 package com.com.org.visualization;
 
 
+import com.com.org.system.ElevatorSystem;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ElevatorSystemWindow extends JFrame {
 
-    private JLabel titleLabel;
-    private JSlider elevatorSlider;
-    private JLabel nOfElevatorsLabel;
-    private JButton startSimulationButton;
     private int nOfElevators = 1;
 
     public ElevatorSystemWindow(){
@@ -21,28 +20,34 @@ public class ElevatorSystemWindow extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 
-        titleLabel = new JLabel("Elevator Controller", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Elevator Controller", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        nOfElevatorsLabel = new JLabel("Number of Elevators: "+nOfElevators, SwingConstants.CENTER);
+        JLabel nOfElevatorsLabel = new JLabel("Number of Elevators: "+nOfElevators, SwingConstants.CENTER);
         nOfElevatorsLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         nOfElevatorsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        elevatorSlider = new JSlider(JSlider.HORIZONTAL, 1, 16, 1);
+        JSlider elevatorSlider = new JSlider(JSlider.HORIZONTAL, 1, 16, 1);
 
         elevatorSlider.addChangeListener(e -> {
             nOfElevators = elevatorSlider.getValue();
             nOfElevatorsLabel.setText("Number of Elevators: "+nOfElevators);
         });
 
-        startSimulationButton = new JButton("Start Simulation");
+        JButton startSimulationButton = new JButton("Start Simulation");
         startSimulationButton.setFont(new Font("Arial", Font.PLAIN, 20));
         startSimulationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         startSimulationButton.addActionListener(e -> {
+
+            ElevatorSystem elevatorSystem = new ElevatorSystem();
+            for(int i=0;i<nOfElevators;i++){
+                elevatorSystem.addElevator(i+1);
+            }
+
             Thread thread = new Thread(() -> {
-                SimulationWindow sw = new SimulationWindow(nOfElevators);
+                SimulationWindow sw = new SimulationWindow(elevatorSystem, 11);
                 sw.setVisible(true);
             });
             thread.start();
@@ -57,7 +62,6 @@ public class ElevatorSystemWindow extends JFrame {
 
         add(panel);
 
-        setVisible(true);
     }
 
 
