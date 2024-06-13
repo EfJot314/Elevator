@@ -6,7 +6,12 @@ Program do obsługi systemu wielu działających równolegle wind.
 Aplikacja została napisana w języku ```Java 19``` z wykorzystaniem narzedzia do budowania projektów ```Maven```. 
 
 ## Uruchamianie aplikacji
-W celu uruchomienia aplikacji należy 
+W celu uruchomienia aplikacji należy wykonać z poziomu projektu polecenie:
+```
+mvn clean compile exec:java -e
+```
+
+Opcja ```-e``` pozwala na wyświetlenie informacji o ewentualnych problemach, które wystąpiły podczas uruchamiania programu.
 
 ## Opis działania
 
