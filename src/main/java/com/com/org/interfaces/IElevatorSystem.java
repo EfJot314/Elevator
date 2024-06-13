@@ -2,7 +2,6 @@ package com.com.org.interfaces;
 
 import com.com.org.datastructures.Direction;
 import com.com.org.datastructures.ElevatorState;
-import com.com.org.elevator.Elevator;
 
 import java.util.List;
 

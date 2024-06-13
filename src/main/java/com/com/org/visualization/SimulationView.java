@@ -15,6 +15,10 @@ public class SimulationView extends JFrame {
     public SimulationView(ElevatorSystem elevatorSystem, int nOfFloors){
         this.elevatorSystem = elevatorSystem;
 
+        Font smallFont = new Font("Arial", Font.PLAIN, 20);
+        Font mediumFont = new Font("Arial", Font.BOLD, 25);
+        Font bigFont = new Font("Arial", Font.BOLD, 32);
+
         setTitle("Elevators Simulation");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1400, 900);
@@ -24,7 +28,7 @@ public class SimulationView extends JFrame {
 
         JLabel titleLabel = new JLabel("Elevator Simulation");
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        titleLabel.setFont(bigFont);
 
         Panel mainPanel = new Panel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
@@ -40,29 +44,29 @@ public class SimulationView extends JFrame {
 
         JLabel floorsLabel = new JLabel("Floors");
         floorsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        floorsLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        floorsLabel.setFont(mediumFont);
 
         leftPanel.add(floorsLabel);
         leftPanel.add(Box.createVerticalGlue());
 
-        for(int i=nOfFloors-1;i>=0;i--){
+        for(int i = nOfFloors-1; i>=0; i--){
             int floorNum = i;
 
             Panel p = new Panel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 
             JLabel label = new JLabel("Floor "+floorNum);
-            label.setFont(new Font("Arial", Font.PLAIN, 20));
+            label.setFont(smallFont);
 
             JButton upButton = new JButton("\u25B2");
-            upButton.setFont(new Font("Arial", Font.PLAIN, 20));
+            upButton.setFont(smallFont);
             upButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             upButton.addActionListener(e -> {
                 elevatorSystem.pickup(floorNum, Direction.UP);
             });
 
             JButton downButton = new JButton("\u25BC");
-            downButton.setFont(new Font("Arial", Font.PLAIN, 20));
+            downButton.setFont(smallFont);
             downButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             downButton.addActionListener(e -> {
                 elevatorSystem.pickup(floorNum, Direction.DOWN);
@@ -85,7 +89,7 @@ public class SimulationView extends JFrame {
 
         JLabel elevatorsLabel = new JLabel("Elevators");
         elevatorsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        elevatorsLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        elevatorsLabel.setFont(mediumFont);
 
         rightPanel.add(elevatorsLabel);
         rightPanel.add(Box.createVerticalGlue());
@@ -101,7 +105,7 @@ public class SimulationView extends JFrame {
 
 
         JButton stepButton = new JButton("Next Step");
-        stepButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        stepButton.setFont(smallFont);
         stepButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         stepButton.addActionListener(e -> {

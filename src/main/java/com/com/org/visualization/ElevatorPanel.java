@@ -1,6 +1,5 @@
 package com.com.org.visualization;
 
-import com.com.org.elevator.Elevator;
 import com.com.org.interfaces.IElevator;
 
 import javax.swing.*;
@@ -16,26 +15,29 @@ public class ElevatorPanel extends Panel {
     public ElevatorPanel(IElevator elevator, int nOfFloors) {
         this.elevator = elevator;
 
+        Font smallFont = new Font("Arial", Font.PLAIN, 20);
+        Font smallBoldFont = new Font("Arial", Font.BOLD, 20);
+
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         JLabel elevatorLabel = new JLabel("Elevator "+elevator.getId());
-        elevatorLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        elevatorLabel.setFont(smallBoldFont);
         elevatorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         floorLabel = new JLabel("Floor: " + elevator.getCurrentFloor());
-        floorLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        floorLabel.setFont(smallFont);
         floorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         directionLabel = new JLabel("Direction: " + elevator.getDirection());
-        directionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        directionLabel.setFont(smallFont);
         directionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         destinationLabel = new JLabel("Destination: " + elevator.getDestinationFloor());
-        destinationLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        destinationLabel.setFont(smallFont);
         destinationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton panelButton = new JButton("Button Panel");
-        panelButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        panelButton.setFont(smallFont);
         panelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         ButtonPanelView bpw = new ButtonPanelView(elevator, nOfFloors);

@@ -1,6 +1,5 @@
 package com.com.org.visualization;
 
-import com.com.org.elevator.Elevator;
 import com.com.org.interfaces.IElevator;
 
 import javax.swing.*;
@@ -10,6 +9,10 @@ public class ButtonPanelView extends JFrame {
 
 
     public ButtonPanelView(IElevator elevator, int nOfFloors){
+
+        Font smallFont = new Font("Arial", Font.PLAIN, 20);
+        Font bigFont = new Font("Arial", Font.BOLD, 32);
+
         setTitle("Elevator "+elevator.getId()+" Button Panel");
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(500, 700);
@@ -18,7 +21,7 @@ public class ButtonPanelView extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JLabel label = new JLabel("Elevator "+elevator.getId());
-        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setFont(bigFont);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
@@ -30,7 +33,7 @@ public class ButtonPanelView extends JFrame {
 
             JButton button = new JButton(String.valueOf(floor));
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
-            button.setFont(new Font("Arial", Font.PLAIN, 20));
+            button.setFont(smallFont);
 
             button.addActionListener(e -> {
                 elevator.goTo(floor);
