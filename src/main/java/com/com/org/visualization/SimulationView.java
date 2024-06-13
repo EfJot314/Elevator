@@ -19,14 +19,14 @@ public class SimulationView extends JFrame {
         Font mediumFont = new Font("Arial", Font.BOLD, 25);
         Font bigFont = new Font("Arial", Font.BOLD, 32);
 
-        setTitle("Elevators Simulation");
+        setTitle("Elevator System Simulation");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1400, 900);
 
         Panel panel = new Panel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel titleLabel = new JLabel("Elevator Simulation");
+        JLabel titleLabel = new JLabel("Elevator System Simulation");
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setFont(bigFont);
 

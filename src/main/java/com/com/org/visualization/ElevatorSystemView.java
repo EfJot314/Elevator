@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class ElevatorSystemView extends JFrame {
 
-    private int nOfElevators = 1;
+    private int nOfElevators = 3;
 
     public ElevatorSystemView(){
 
@@ -31,7 +31,7 @@ public class ElevatorSystemView extends JFrame {
         nOfElevatorsLabel.setFont(smallFont);
         nOfElevatorsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JSlider elevatorSlider = new JSlider(JSlider.HORIZONTAL, 1, 16, 1);
+        JSlider elevatorSlider = new JSlider(JSlider.HORIZONTAL, 1, 16, nOfElevators);
 
         elevatorSlider.addChangeListener(e -> {
             nOfElevators = elevatorSlider.getValue();

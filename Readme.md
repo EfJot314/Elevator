@@ -148,7 +148,48 @@ Klasa ```ElevatorSystem.java``` implementuje interfejs ```IElevatorSystem```. Kl
 
 ### Wizualizacja
 
-Drugą częścią projektu jest jego wizualizacja w postaci aplikacji graficznej napisanej na podstawie biblioteki ```swing```. 
+Drugą częścią projektu jest jego wizualizacja w postaci aplikacji graficznej napisanej korzystając z biblioteki ```swing```.
+
+#### Widok początkowy
+
+!["Start View"](images/startView.png)
+
+Na pierwszym widoku (```ElevatorSystemView```) znajduje się suwak do określania liczby wind w systemie oraz przycisk umożliwiający start symulacji, po którego naciśnięciu uruchamia się nowe okno ```SimulationView``` (ekran początkowy nie znika - można uruchomić wiele symulacji jednocześnie).
+
+#### Widok symulacji
+
+!["Simulation View"](images/simulationView.png)
+
+Widok symulacji jest podzielony na dwie kolumny:
+1. Lewa - zawiera przyciski obsługi windy dla wszystkich pięter. Naciśnięcie któregoś z nich wysyła żądanie (```Request```) do systemu.
+2. Prawa - zawiera informacje o każdej z wind w systemie. Od lewej:
+   1. Nazwa i identyfikator windy
+   2. Piętro na którym się znajduje
+   3. Kierunek ruchu windy (początkowo wszystkie znajdują się w stanie ```IDLE``` na parterze)
+   4. Docelowe piętro windy (w stanie ```IDLE``` piętro docelowe zawsze wskazuje na aktualne piętro)
+   5. Przycisk ```Button Panel```, który uruchamia widok przycisków wewnątrz windy ```ButtonPanelView```.
+   
+Poniżej kolumn znajduje się przycisk ```Next Step```, który wysyła do systemu prośbę o wykonanie kolejnego kroku symulacji.
+
+Należy podkreślić, że w każdej symulacji występuje jedenaście poziomów (10 pięter + parter). Jest to spowodowane łatwością wyświetlenia tego w graficznym interfejsie użytkownika. Framework nie ma podanych wprost żadnych ograniczeń związanych z liczbą poziomów obsługiwanych przez windy.
+
+W przypadku, gdy drzwi którejś z wind są otwarte, jej tło zmienia kolor na zielony.
+
+
+!["Open door"](images/openDoor.png)
+
+Można zauważyć, że gdy winda ma otwarte drzwi, jest w tymczasowym stanie ```IDLE``` na jeden krok symulacji, ponieważ winda nie może się poruszać z otwartymi drzwiami do kabiny.
+
+#### Widok panelu przycisków w kabinie
+
+!["Button Panel View"](images/buttonPanelView.png)
+
+Widok przycisków w kabinie składa się z dwóch zasadniczych komponentów:
+1. Nazwy i identyfikatora windy
+2. Listy przycisków, których naciśnięcie powoduje dodanie wewnętrznego żądania do windy
+
+
+
 
 
 
