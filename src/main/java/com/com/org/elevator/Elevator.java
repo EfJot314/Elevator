@@ -3,6 +3,7 @@ package com.com.org.elevator;
 import com.com.org.datastructures.Direction;
 import com.com.org.datastructures.ElevatorState;
 import com.com.org.datastructures.Request;
+import com.com.org.interfaces.IElevator;
 import com.com.org.system.ElevatorSystem;
 
 import java.util.*;
@@ -85,10 +86,10 @@ class RequestComparator implements Comparator<Request> {
 
 
 
-public class Elevator {
+public class Elevator implements IElevator {
 
     private final ElevatorSystem elevatorSystem;
-    public final int id;
+    private final int id;
     private boolean enabled;
     private int currentFloor;
     private int destinationFloor;
@@ -108,6 +109,11 @@ public class Elevator {
         requests = new ArrayList<>();
         nextRequest = null;
         enabled = true;
+    }
+
+
+    public int getId() {
+        return id;
     }
 
     public void update(){

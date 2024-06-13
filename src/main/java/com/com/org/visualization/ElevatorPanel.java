@@ -1,23 +1,24 @@
 package com.com.org.visualization;
 
 import com.com.org.elevator.Elevator;
+import com.com.org.interfaces.IElevator;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ElevatorPanel extends Panel {
 
-    private final Elevator elevator;
+    private final IElevator elevator;
     private final JLabel floorLabel;
     private final JLabel directionLabel;
     private final JLabel destinationLabel;
 
-    public ElevatorPanel(Elevator elevator, int nOfFloors) {
+    public ElevatorPanel(IElevator elevator, int nOfFloors) {
         this.elevator = elevator;
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        JLabel elevatorLabel = new JLabel("Elevator "+elevator.id);
+        JLabel elevatorLabel = new JLabel("Elevator "+elevator.getId());
         elevatorLabel.setFont(new Font("Arial", Font.BOLD, 20));
         elevatorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 

@@ -9,7 +9,7 @@ import java.util.List;
 public interface IElevatorSystem {
     void addElevator(int id);
     int getNumberOfElevators();
-    Elevator getElevator(int id);
+    IElevator getElevator(int id);
     void removeElevator(int id);
     void disableElevator(int id);
     void enableElevator(int id);

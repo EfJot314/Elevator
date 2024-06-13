@@ -1,6 +1,7 @@
 package com.com.org.visualization;
 
 import com.com.org.elevator.Elevator;
+import com.com.org.interfaces.IElevator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,15 +9,15 @@ import java.awt.*;
 public class ButtonPanelView extends JFrame {
 
 
-    public ButtonPanelView(Elevator elevator, int nOfFloors){
-        setTitle("Elevator "+elevator.id+" Button Panel");
+    public ButtonPanelView(IElevator elevator, int nOfFloors){
+        setTitle("Elevator "+elevator.getId()+" Button Panel");
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(500, 700);
 
         Panel panel = new Panel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Elevator "+elevator.id);
+        JLabel label = new JLabel("Elevator "+elevator.getId());
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
 

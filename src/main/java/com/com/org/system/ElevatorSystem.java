@@ -4,6 +4,7 @@ import com.com.org.datastructures.Direction;
 import com.com.org.datastructures.ElevatorState;
 import com.com.org.datastructures.Request;
 import com.com.org.elevator.Elevator;
+import com.com.org.interfaces.IElevator;
 import com.com.org.interfaces.IElevatorSystem;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import static java.lang.Math.abs;
 
 public class ElevatorSystem implements IElevatorSystem {
 
-    private final List<Elevator> elevators;
+    private final List<IElevator> elevators;
     private final List<Request> requests;
 
     public ElevatorSystem() {
@@ -22,7 +23,7 @@ public class ElevatorSystem implements IElevatorSystem {
     }
 
     public void addElevator(int id) {
-        Elevator elevator = getElevator(id);
+        IElevator elevator = getElevator(id);
         if(elevator == null) {
             this.elevators.add(new Elevator(id, this));
         }
@@ -34,7 +35,7 @@ public class ElevatorSystem implements IElevatorSystem {
     }
 
     public void removeElevator(int id) {
-        Elevator elevator = getElevator(id);
+        IElevator elevator = getElevator(id);
         if(elevator != null) {
             elevators.remove(elevator);
         }
@@ -42,7 +43,7 @@ public class ElevatorSystem implements IElevatorSystem {
 
     @Override
     public void disableElevator(int id) {
-        Elevator elevator = getElevator(id);
+        IElevator elevator = getElevator(id);
         if(elevator != null) {
             elevator.setEnability(false);
         }
@@ -52,7 +53,7 @@ public class ElevatorSystem implements IElevatorSystem {
 
     @Override
     public void enableElevator(int id) {
-        Elevator elevator = getElevator(id);
+        IElevator elevator = getElevator(id);
         if(elevator != null) {
             elevator.setEnability(true);
         }
@@ -68,7 +69,7 @@ public class ElevatorSystem implements IElevatorSystem {
     }
 
     public void completeRequest(Request request) {
-        for(Elevator elevator : elevators) {
+        for(IElevator elevator : elevators) {
             elevator.removeRequest(request);
         }
         requests.remove(request);
@@ -76,7 +77,7 @@ public class ElevatorSystem implements IElevatorSystem {
 
     @Override
     public void update(int id, int currentFloor, int destinationFloor) {
-        Elevator elevator = getElevator(id);
+        IElevator elevator = getElevator(id);
         if(elevator != null) {
             elevator.setCurrentFloor(currentFloor);
             elevator.setDestinationFloor(destinationFloor);
@@ -86,7 +87,7 @@ public class ElevatorSystem implements IElevatorSystem {
     private void addRequestToElevators(Request request) {
         //first iteration
         boolean foundElevator = false;
-        for(Elevator elevator : elevators) {
+        for(IElevator elevator : elevators) {
             //if elevator is IDLE
             if(elevator.getDirection() == Direction.IDLE){
                 elevator.addRequest(request);
@@ -105,7 +106,7 @@ public class ElevatorSystem implements IElevatorSystem {
         }
         //second iteration
         if(!foundElevator) {
-            for(Elevator elevator : elevators) {
+            for(IElevator elevator : elevators) {
                 //if elevator has same direction as request
                 if(request.direction == elevator.getDirection()){
                     if(request.direction == Direction.DOWN){
@@ -121,8 +122,8 @@ public class ElevatorSystem implements IElevatorSystem {
             if(!foundElevator) {
                 //find elevator with the closest destination floor
                 int distance = 1000;
-                Elevator chosenElevator = elevators.get(0);
-                for(Elevator elevator : elevators) {
+                IElevator chosenElevator = elevators.get(0);
+                for(IElevator elevator : elevators) {
                     int d = abs(elevator.getDestinationFloor() - request.floor);
                     if(d < distance){
                         chosenElevator = elevator;
@@ -136,7 +137,7 @@ public class ElevatorSystem implements IElevatorSystem {
     @Override
     public void step() {
         //move
-        for(Elevator elevator : elevators) {
+        for(IElevator elevator : elevators) {
             elevator.update();
         }
     }
@@ -144,15 +145,15 @@ public class ElevatorSystem implements IElevatorSystem {
     @Override
     public List<ElevatorState> status() {
         List<ElevatorState> elevatorStates = new ArrayList<>();
-        for(Elevator elevator : elevators) {
+        for(IElevator elevator : elevators) {
             elevatorStates.add(elevator.getElevatorState());
         }
         return elevatorStates;
     }
 
-    public Elevator getElevator(int id){
-        for(Elevator elevator : elevators) {
-            if(elevator.id == id){
+    public IElevator getElevator(int id){
+        for(IElevator elevator : elevators) {
+            if(elevator.getId() == id){
                 return elevator;
             }
         }
