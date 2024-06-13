@@ -1,4 +1,4 @@
-package com.com.org.datastructures;
+package com.com.org.framework.datastructures;
 
 public class ElevatorState {
     public final int id;

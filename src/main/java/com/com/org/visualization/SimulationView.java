@@ -1,8 +1,8 @@
 package com.com.org.visualization;
 
 
-import com.com.org.datastructures.Direction;
-import com.com.org.system.ElevatorSystem;
+import com.com.org.framework.datastructures.Direction;
+import com.com.org.framework.system.ElevatorSystem;
 
 import javax.swing.*;
 import java.awt.*;

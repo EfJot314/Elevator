@@ -1,4 +1,4 @@
-package com.com.org.datastructures;
+package com.com.org.framework.datastructures;
 
 public enum Direction {
     UP(1),

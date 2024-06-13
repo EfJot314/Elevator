@@ -1,4 +1,4 @@
-package com.com.org.datastructures;
+package com.com.org.framework.datastructures;
 
 import java.util.Objects;
 
